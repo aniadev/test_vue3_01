@@ -1,0 +1,2 @@
+GET https://test-blockchain-api.beedu.vn/main/api/v1/exchange-rates
+Content-Type: application/json
