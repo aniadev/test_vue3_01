@@ -1,6 +1,6 @@
 <template>
   <div class="w-full mt-20 flex flex-col items-center">
-    <canvas :width="CV_WIDTH" :height="CV_HEIGHT" id="main-cvs" class="mx-auto border"></canvas>
+    <canvas :width="CV_WIDTH" :height="CV_HEIGHT" id="main-cvs" class="mx-auto"></canvas>
     <div class="mt-5 w-[600px] flex items-center">
       <el-input v-model="input" placeholder="0,1,4,2,..." class="flex-grow"></el-input>
       <el-button class="ml-2" @click="handleDraw">Draw</el-button>
@@ -41,6 +41,29 @@ function getArrayNumber(input: string): number[] {
   }
 }
 
+function calculateVolume(array: number[]) {
+  const length = array.length
+  for (let i = 0; i < length; i++) {
+    console.log(`array[${i}]::${array[i]}`)
+    if (array[i] > array[i + 1]) {
+      const max1 = array[i]
+      let max2 = max1
+      console.log(`TOP-01`, max1)
+      for (let jx = i; jx < length; jx++) {
+        if (max1 < array[jx]) {
+          max2 = array[jx]
+          console.log(`TOP-02`, max2)
+          break
+        } else {
+          //
+        }
+      }
+    }
+  }
+
+  return 0
+}
+
 function handleDraw() {
   // @ts-ignore
   input.value = input.value.replaceAll(' ', '')
@@ -61,6 +84,7 @@ function handleDraw() {
   ctx.clearRect(0, 0, CV_WIDTH, CV_HEIGHT)
   console.log(`Clear rect`)
 
+  ctx.lineWidth = 1
   ctx.strokeStyle = 'black'
   //
   arrNum.forEach((val, col) => {
@@ -70,6 +94,8 @@ function handleDraw() {
       ctx.strokeRect(col * blockSize, CV_HEIGHT - blockSize * (row + 1), blockSize, blockSize)
     }
   })
+
+  volume.value = calculateVolume(arrNum)
 }
 </script>
 
