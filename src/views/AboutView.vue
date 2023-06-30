@@ -3,11 +3,13 @@
     <canvas :width="CV_WIDTH" :height="CV_HEIGHT" id="main-cvs" class="mx-auto p-2 border"></canvas>
     <div class="mt-5 w-[600px] flex items-center">
       <el-input v-model="input" placeholder="0,1,4,2,..." class="flex-grow"></el-input>
-      <el-button class="ml-2" @click="handleDraw">Draw</el-button>
+      <el-button class="ml-2" @click="handleDraw" id="btn-draw">Draw</el-button>
     </div>
     <div class="mt-5 w-full max-w-[600px] mx-auto">
       <p class="text-[16px] font-[400] leading-[24px] text-left">
-        <span class="font-bold">Volume:</span> <span>{{ volume }} m³</span>
+        <span class="font-bold">
+          Volume: <span id="volume">{{ volume }}</span> m³
+        </span>
       </p>
     </div>
   </div>
@@ -16,8 +18,9 @@
 <script lang="ts" setup>
 import { ElMessage } from 'element-plus'
 import { onMounted, ref } from 'vue'
+import { calculateVolume } from '@/utils/calculator'
 
-const input = ref<string>('1,4,5,2,8,4,5,6,4,5,5,4,15,0,7,6,9')
+const input = ref<string>('1,4,5,2,8,4,5,6,4,5,5,4,15,0,7,6,2,0,3')
 const canvas = ref<HTMLCanvasElement | null>(null)
 const volume = ref<number>(0)
 
@@ -42,74 +45,6 @@ function getArrayNumber(input: string): number[] {
   }
 }
 
-function calculateVolume(array: number[]) {
-  let totalVol = 0
-  const length = array.length
-
-  let breakPoint = 0
-  let holes = []
-
-  for (let i = 0; i < length; i++) {
-    console.log(`array[${i}]::${array[i]}`)
-    if (i < breakPoint) continue
-    let max1 = array[i]
-    let max2 = array[i]
-    let max1_index = i
-    let max2_index = i
-
-    // find the big hole
-    if (array[i] > array[i + 1]) {
-      max1_index = i
-      console.log(`TOP-01`, max1, `index::${i}`)
-      for (let jx = i; jx < length; jx++) {
-        if (max1 < array[jx]) {
-          max2 = array[jx]
-          max2_index = jx
-          console.log(`TOP-02`, max2, `index::${max2_index}`)
-          breakPoint = max2_index
-          break
-        } else {
-          //
-        }
-      }
-      // end loop and do not find max2
-      if (max2_index == max1_index) {
-        console.log(`Endloop => find max2'`)
-        // find second max_2 = max(index_1, end)
-        max2_index = length - 1
-        max2 = array[max2_index]
-        for (let j_iv = length - 1; j_iv > max1_index; j_iv--) {
-          if (array[j_iv] > max2) {
-            max2_index = j_iv
-            breakPoint = max2_index
-            max2 = array[max2_index]
-            break
-          }
-        }
-        console.log(`TOP-02'`, max2, `index::${max2_index}`)
-      }
-    } else {
-      //
-    }
-
-    if (max1_index != max2_index) holes.push([max1_index, max2_index])
-  }
-
-  // calculate volume from holes
-  console.log('>>> / file: AboutView.vue:101 / holes:', holes)
-  holes.forEach(([x1, x2]) => {
-    const min_height = Math.min(array[x1], array[x2])
-    console.log('>>> / file: AboutView.vue:99 / max:', min_height)
-    const _vol =
-      min_height * (x2 - x1 - 1) -
-      array.slice(x1 + 1, x2 - 1 + 1).reduce((sum, value) => sum + value, 0)
-
-    totalVol += _vol
-  })
-
-  return totalVol
-}
-
 function handleDraw() {
   // @ts-ignore
   input.value = input.value.replaceAll(' ', '')
@@ -117,11 +52,6 @@ function handleDraw() {
   const cols = arrNum.length
   const rows = Math.max(...arrNum)
   const blockSize = CV_HEIGHT / rows < CV_WIDTH / cols ? CV_HEIGHT / rows : CV_WIDTH / cols
-
-  console.log('>>> / file: AboutView.vue:43 / cols:::', cols, '::rows:::', rows)
-  console.log('>>> / file: AboutView.vue:43 / blockSize:', blockSize)
-  console.log('>>> / file: AboutView.vue:23 / arrNum:', arrNum)
-
   if (!canvas.value) return
   const ctx = canvas.value.getContext('2d')
   if (!ctx) return
