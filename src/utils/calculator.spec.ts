@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 
-import { calculateVolume } from '../utils/calculator'
+import { calculateVolume } from './calculator'
 
 function getArrayNumber(input: string): number[] {
   const regex = /^[0-9,]*$/
