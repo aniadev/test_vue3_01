@@ -4,5 +4,22 @@ module.exports = {
   theme: {
     extend: {}
   },
-  plugins: []
+  plugins: [require('@tailwindcss/typography')],
+  presets: [
+    {
+      theme: {
+        extend: {
+          fontSize: {
+            base: '16px'
+          },
+          fontWeight: {
+            base: '400'
+          },
+          lineHeight: {
+            base: '24px'
+          }
+        }
+      }
+    }
+  ]
 }
