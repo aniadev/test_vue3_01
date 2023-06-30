@@ -6,8 +6,8 @@
 ![Static Badge](https://img.shields.io/badge/vuejs-3.3.4-42B883)
 
 ### Author:
-#### [@aniadev](https://github.com/aniadev){:target="_blank"}
+#### [@aniadev](https://github.com/aniadev)
 
 ### Repository:
-#### [AniadevExamination](https://github.com/aniadev/test_vue3_01){:target="_blank"}
+#### [AniadevExamination](https://github.com/aniadev/test_vue3_01)
 
