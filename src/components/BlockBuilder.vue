@@ -1,12 +1,22 @@
 <template>
-  <div class="w-full mt-20 flex flex-col items-center">
-    <canvas :width="CV_WIDTH" :height="CV_HEIGHT" id="main-cvs" class="mx-auto p-2 border"></canvas>
-    <div class="mt-5 w-[600px] flex items-center">
+  <h3 class="mt-2">
+    Description:
+    <a
+      href="/images/block-builder.png"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-[16px] font-[700] leading-[24px] underline"
+      >Test requirement</a
+    >
+  </h3>
+  <div class="mt-20 flex w-full flex-col items-center">
+    <canvas :width="CV_WIDTH" :height="CV_HEIGHT" id="main-cvs" class="mx-auto border p-2"></canvas>
+    <div class="mt-5 flex w-[600px] items-center">
       <el-input v-model="input" placeholder="0,1,4,2,..." class="flex-grow"></el-input>
       <el-button class="ml-2" @click="handleDraw" id="btn-draw">Draw</el-button>
     </div>
-    <div class="mt-5 w-full max-w-[600px] mx-auto">
-      <p class="text-[16px] font-[400] leading-[24px] text-left">
+    <div class="mx-auto mt-5 w-full max-w-[600px]">
+      <p class="text-left text-[16px] font-[400] leading-[24px]">
         <span class="font-bold">
           Volume: <span id="volume">{{ volume }}</span> m³
         </span>

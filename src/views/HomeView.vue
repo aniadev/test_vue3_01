@@ -2,7 +2,7 @@
   <div class="h-full w-full md:mx-auto md:mt-[120px] md:max-w-[680px]">
     <article
       v-html="markdown.render(content)"
-      class="prose prose-stone lg:prose prose-img:m-0 prose-img:inline-block"
+      class="prose prose-stone mx-auto lg:prose prose-img:m-0 prose-img:inline-block"
     />
   </div>
 </template>
