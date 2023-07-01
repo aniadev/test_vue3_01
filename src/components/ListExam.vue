@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 import type { Tree } from '@/views/ExamsView.vue'
 
-const props = defineProps<{
+defineProps<{
   tree: Tree
 }>()
 const emit = defineEmits(['select'])

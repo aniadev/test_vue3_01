@@ -23,5 +23,8 @@ export default defineConfig({
   },
   define: {
     __isBrowser__: true
+  },
+  esbuild: {
+    drop: ['console', 'debugger']
   }
 })

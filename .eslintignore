@@ -1,1 +1,3 @@
 tailwind.config.js
+*.config.ts
+*.config.js
